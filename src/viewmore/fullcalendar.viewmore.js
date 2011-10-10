@@ -70,9 +70,9 @@
     });
   };
   
-  this.increaseHeight = function(height, windowResized){
+  this.increaseHeight = function(height, windowResized, td){
     var cal = this.calendar,
-          cells =  cal.find('.fc-view-month tbody tr td'),
+          cells = td || cal.find('.fc-view-month tbody tr td'),
           fcDayContent = cells.find('.fc-day-content'),
           cellHeight, fcDayContentHeight;
           
@@ -125,6 +125,7 @@
                             
                             return false;
                         });
+                        self.increaseHeight(25, false, td);
                     }
                     if ($.isFunction(_eventRender)) _eventRender(event, element);
                     return false; //prevents event from being rendered
@@ -261,7 +262,7 @@
             
     td = $('.fc-day-number').filter(function(){
       return $(this).text()===$.fullCalendar.formatDate(thisDate,'d')
-    }).parents('td');
+    }).closest('td');
             
     if (thisDate < start){ //date is in last month
         td = td.filter(':first');
@@ -285,4 +286,4 @@
     return calInstance.fullCalendar('getView').cellDate(cellPos);
   }
   
-}).call($.fn.limitEvents.constructor.prototype, jQuery);
+}).call(jQuery.fn.limitEvents.constructor.prototype, jQuery);
